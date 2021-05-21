@@ -1,34 +1,9 @@
 @Library('todoshop') _
 
-pipeline{
-
-    agent any
-
-    stages {
-
-        stage('Download Dependencies') {
-            steps {
-                sh '''
-                npm install
-            '''
-            }
-        }
-        stage('prepare Artifacts') {
-            steps {
-                sh '''
-                zip -r todo.zip *
-            '''
-            }
-
-        }
-        stage('upload Artifacts') {
-            steps {
-                script {
-                    nexus
-                }
-           
-        
-            }
-        }
-    }
-}
+todoshop (
+        COMPONENT             : 'todoshop',
+        PROJECT_NAME          : "todoshop",
+        SLAVE_LABEL           : "NODEJS",
+        SKIP_NEXUS_UPLOAD     : false,
+        APP_TYPE              : "NODEJS"
+)
